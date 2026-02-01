@@ -1,0 +1,323 @@
+/* =========================================
+   HILANGKAN SCROLLBAR (TAPI TETAP BISA SCROLL)
+========================================= */
+
+/* Untuk Chrome, Safari, dan Edge */
+::-webkit-scrollbar {
+    width: 0px;
+    background: transparent; /* Membuat background transparan */
+}
+
+/* Untuk Firefox */
+html {
+    scrollbar-width: none;
+}
+
+/* Untuk Internet Explorer / Edge Lama */
+body {
+    -ms-overflow-style: none;
+    /* Mencegah scroll ke samping (horizontal) */
+    overflow-x: hidden; 
+}
+:root {
+    /* Palette Warna Utama */
+    --primary-pink: #ffc2d1;
+    --deep-pink: #e75480;
+    --soft-white: #fff5f8;
+    --text-color: #5a3a41;
+    --shadow: 0 10px 30px rgba(231, 84, 128, 0.15);
+    
+    /* Warna Pita */
+    --ribbon-color: var(--deep-pink);
+    --ribbon-dark: #c23a63;
+
+    /* Warna Space Overlay */
+    --space-bg-1: #2c001e;
+    --space-bg-2: #590032;
+    --star-color: #ffd1dc;
+}
+
+html { scroll-behavior: smooth; }
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+    background-color: var(--soft-white);
+    background-image: linear-gradient(to bottom, #fff0f5 0%, #ffdee5 100%);
+    font-family: 'Quicksand', sans-serif; color: var(--text-color);
+    overflow-x: hidden;
+}
+
+/* =========================================
+   1. OVERLAY PINK SPACE JOURNEY
+========================================= */
+#space-overlay {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    /* Background Gradasi Space Pink */
+    background: radial-gradient(ellipse at bottom, var(--space-bg-2) 0%, var(--space-bg-1) 100%);
+    z-index: 9999;
+    display: flex; justify-content: center; align-items: center;
+    text-align: center; overflow: hidden;
+    transition: opacity 1.5s ease-in-out;
+}
+
+.space-content {
+    position: relative; z-index: 10; color: var(--soft-white);
+    max-width: 600px; padding: 20px; width: 100%;
+}
+
+.instruction { font-size: 1.2rem; margin-bottom: 20px; opacity: 0.8; }
+
+/* Container Sequence Teks */
+#text-sequence-box {
+    position: relative; min-height: 200px;
+    display: flex; justify-content: center; align-items: center;
+    flex-direction: column;
+}
+
+/* Teks Animasi (Muncul Satu per Satu) */
+.space-text {
+    font-family: 'Dancing Script', cursive; font-size: 2.5rem;
+    color: var(--soft-white);
+    text-shadow: 0 0 10px rgba(255, 194, 209, 0.5);
+    position: absolute; width: 100%; top: 50%; left: 50%;
+    transform: translate(-50%, -50%); /* Posisi Tengah Mutlak */
+    opacity: 0; transition: opacity 1s ease-in-out; margin: 0;
+}
+.space-text.show { opacity: 1; }
+
+/* Judul Akhir (Drop Down Effect) */
+.space-title {
+    font-family: 'Dancing Script', cursive; font-size: 3.5rem;
+    color: var(--deep-pink);
+    text-shadow: 0 0 20px rgba(231, 84, 128, 0.8);
+    position: absolute; width: 100%; top: 45%; left: 50%;
+    /* Posisi Awal: Di atas layar */
+    transform: translate(-50%, -150px);
+    opacity: 0; transition: all 1.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+    margin: 0; z-index: 15;
+    /* Flexbox agar icon hati sejajar teks */
+    display: flex; align-items: center; justify-content: center; gap: 15px;
+}
+.space-title.show-drop { opacity: 1; transform: translate(-50%, -50%); }
+
+/* Style Tombol di Overlay (Start & Open) */
+.btn-space-start, .btn-space-open {
+    padding: 15px 40px; border: none; border-radius: 50px;
+    font-size: 1.2rem; font-family: 'Quicksand', sans-serif; font-weight: bold;
+    cursor: pointer; display: inline-flex; align-items: center; gap: 10px; justify-content: center;
+    transition: transform 0.3s;
+}
+
+.btn-space-start {
+    background: var(--deep-pink); color: white;
+    box-shadow: 0 0 20px rgba(231, 84, 128, 0.5);
+}
+
+.btn-space-open {
+    background: white; color: var(--deep-pink);
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+    position: relative; z-index: 20;
+    margin-top: 150px; /* Jarak agar tidak menabrak judul */
+    opacity: 0; transition: opacity 1s ease;
+}
+.btn-space-open.visible { opacity: 1; }
+.btn-space-start:hover, .btn-space-open:hover { transform: scale(1.1); }
+
+
+/* =========================================
+   BARU: 3D WARP SPEED ANIMATION (PENGGANTI STAR FIELD LAMA)
+========================================= */
+
+/* Wadah utama untuk menciptakan ruang 3D */
+.warp-container {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    perspective: 1000px; /* Titik hilang di tengah layar */
+    transform-style: preserve-3d;
+    z-index: 1; /* Di belakang konten teks */
+    overflow: hidden;
+}
+
+/* Bintang Individual */
+.star {
+    position: absolute;
+    width: 3px; height: 3px; /* Ukuran dasar bintang */
+    background-color: var(--star-color);
+    border-radius: 50%; /* Biar bulat */
+    box-shadow: 0 0 4px var(--star-color), 0 0 8px var(--primary-pink); /* Efek bersinar pink */
+    opacity: 0; /* Mulai dari transparan */
+    /* Posisi awal akan diatur acak oleh JS */
+}
+
+/* Animasi Terbang Menembus Layar */
+@keyframes warpMove {
+    0% {
+        opacity: 0;
+        /* Mulai dari kejauhan (titik tengah dalam) */
+        transform: translateZ(-5000px) scale(0.1);
+    }
+    20% {
+        opacity: 1; /* Muncul perlahan */
+    }
+    100% {
+        opacity: 1;
+        /* Berakhir melewati layar pembaca (semakin besar) */
+        transform: translateZ(500px) scale(2); 
+    }
+}
+
+
+/* =========================================
+   2. MAIN WEBSITE STYLES
+========================================= */
+
+/* Tombol Musik Utama (Pojok Kiri Bawah) */
+.music-btn {
+    position: fixed; bottom: 30px; left: 30px;
+    width: 50px; height: 50px; border-radius: 50%;
+    background: white; border: 2px solid var(--deep-pink);
+    color: var(--deep-pink); font-size: 1.5rem;
+    cursor: pointer; z-index: 2000;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    display: flex; justify-content: center; align-items: center;
+    transition: transform 0.3s;
+}
+.music-btn:hover { transform: scale(1.1); }
+
+/* Background Hati Melayang */
+#heart-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: -1; overflow: hidden; }
+.floating-heart {
+    position: absolute; color: rgba(231, 84, 128, 0.4);
+    animation: floatUp linear infinite;
+    font-size: 20px; /* Ukuran icon hati */
+}
+@keyframes floatUp { from { transform: translateY(110vh) scale(0.5); opacity: 0; } to { transform: translateY(-10vh) scale(1.2); opacity: 0.8; } }
+
+/* Header & Navigasi */
+header {
+    position: fixed; top: 0; width: 100%;
+    background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(10px);
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 15px 5%; z-index: 1000; box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+}
+.logo { font-family: 'Dancing Script', cursive; font-size: 1.8rem; color: var(--deep-pink); font-weight: bold; display: flex; align-items: center; gap: 5px; }
+nav ul { list-style: none; display: flex; gap: 20px; }
+nav a { text-decoration: none; color: var(--text-color); font-weight: 600; transition: color 0.3s; font-size: 0.95rem; }
+nav a:hover { color: var(--deep-pink); }
+
+/* Section Umum */
+.section-container { padding: 80px 20px; max-width: 800px; margin: 0 auto; text-align: center; }
+.section-title {
+    font-family: 'Dancing Script', cursive; font-size: 2.5rem; color: var(--deep-pink);
+    margin-bottom: 30px; display: flex; align-items: center; justify-content: center; gap: 10px;
+}
+
+/* Hero Section */
+.hero-section { height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; position: relative; padding-top: 60px; }
+.hero-content h1 { font-family: 'Dancing Script'; font-size: 3.5rem; color: var(--deep-pink); margin-bottom: 10px; }
+.partner-name { font-size: 2.8rem; margin: 10px 0 20px 0; color: var(--text-color); font-weight: bold; }
+
+/* Pita Realistis */
+.bow-wrapper { margin-bottom: 25px; display: flex; justify-content: center; position: relative; z-index: 10; }
+.ribbon { position: relative; width: 120px; height: 80px; margin-top: -20px; animation: textFloat 4s ease-in-out infinite; }
+.ribbon-knot { position: absolute; top: 20px; left: 50%; transform: translateX(-50%); width: 25px; height: 25px; background: var(--ribbon-color); border-radius: 8px; z-index: 5; box-shadow: 0 2px 5px rgba(0,0,0,0.2); background: linear-gradient(135deg, var(--ribbon-color) 0%, var(--ribbon-dark) 100%); }
+.ribbon-loop-left { position: absolute; top: 5px; left: 10px; width: 50px; height: 40px; background: var(--ribbon-color); border-radius: 50px 50px 0 50px; transform: rotate(-15deg); z-index: 4; background: linear-gradient(to right, var(--ribbon-dark), var(--ribbon-color)); }
+.ribbon-loop-right { position: absolute; top: 5px; right: 10px; width: 50px; height: 40px; background: var(--ribbon-color); border-radius: 50px 50px 50px 0; transform: rotate(15deg); z-index: 4; background: linear-gradient(to left, var(--ribbon-dark), var(--ribbon-color)); }
+.ribbon-loop-left::after, .ribbon-loop-right::after { content: ''; position: absolute; width: 15px; height: 25px; background: rgba(0,0,0,0.1); top: 8px; border-radius: 50%; filter: blur(2px); }
+.ribbon-loop-left::after { left: 25px; } .ribbon-loop-right::after { right: 25px; }
+.ribbon-tail-left { position: absolute; top: 30px; left: 20px; width: 30px; height: 60px; background: var(--ribbon-color); z-index: 2; transform: rotate(15deg); clip-path: polygon(0 0, 100% 0, 100% 100%, 50% 85%, 0 100%); background: linear-gradient(to bottom, var(--ribbon-dark), var(--ribbon-color)); }
+.ribbon-tail-right { position: absolute; top: 30px; right: 20px; width: 30px; height: 60px; background: var(--ribbon-color); z-index: 2; transform: rotate(-15deg); clip-path: polygon(0 0, 100% 0, 100% 100%, 50% 85%, 0 100%); background: linear-gradient(to bottom, var(--ribbon-dark), var(--ribbon-color)); }
+
+.scroll-indicator { margin-top: 40px; font-size: 2rem; animation: bounce 2s infinite; color: var(--deep-pink); cursor: default; }
+@keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(10px); } }
+
+/* Letter Box */
+.letter-box { background: white; padding: 40px; border-radius: 20px; border: 2px dashed var(--deep-pink); box-shadow: var(--shadow); max-width: 600px; margin: 0 auto; }
+.letter-box p { line-height: 1.8; font-size: 1.1rem; }
+.sign-off { font-family: 'Dancing Script', cursive; font-size: 2rem; color: var(--deep-pink); margin-top: 15px; }
+
+/* Gallery */
+.gallery-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px; }
+.gallery-item { border-radius: 15px; overflow: hidden; border: 4px solid white; box-shadow: var(--shadow); aspect-ratio: 1/1; background: #fff; cursor: pointer; }
+.gallery-item img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; }
+.gallery-item:hover img { transform: scale(1.1); }
+
+/* Modal Pop-up */
+.modal { display: none; position: fixed; z-index: 10000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.7); backdrop-filter: blur(5px); justify-content: center; align-items: center; opacity: 0; transition: opacity 0.3s ease; }
+.modal.show { display: flex; opacity: 1; }
+.modal-content { background-color: white; padding: 20px; border-radius: 20px; max-width: 500px; width: 90%; text-align: center; position: relative; transform: scale(0.8); transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); box-shadow: 0 15px 40px rgba(0,0,0,0.3); border: 4px solid var(--primary-pink); }
+.modal.show .modal-content { transform: scale(1); }
+.modal-content img { width: 100%; max-height: 300px; object-fit: cover; border-radius: 15px; margin-bottom: 20px; border: 2px solid var(--soft-white); }
+.modal-text h3 { font-family: 'Dancing Script', cursive; color: var(--deep-pink); font-size: 2rem; margin-bottom: 10px; }
+.modal-text p { font-family: 'Quicksand', sans-serif; color: var(--text-color); line-height: 1.6; font-size: 1rem; }
+.close-btn { position: absolute; top: -40px; right: 0; color: white; font-size: 40px; font-weight: bold; cursor: pointer; transition: transform 0.2s; }
+.close-btn:hover { transform: scale(1.2) rotate(90deg); color: var(--primary-pink); }
+
+/* Footer */
+footer { background: var(--deep-pink); color: white; text-align: center; padding: 25px; margin-top: 50px; font-size: 0.95rem; }
+
+/* Helper Classes untuk Animasi */
+.fade-in { opacity: 0; transform: translateY(30px); transition: all 1s ease-out; }
+.fade-in.visible { opacity: 1; transform: translateY(0); }
+@keyframes textFloat { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
+.floating-text { display: inline-block; animation: textFloat 4s ease-in-out infinite; }
+
+/* Responsif HP */
+@media (max-width: 600px) {
+    .space-text { font-size: 1.8rem; }
+    .space-title { font-size: 2.5rem; width: 90%; }
+    .hero-content h1 { font-size: 2.5rem; }
+}
+
+/* --- ENVELOPE OPENER STYLES --- */
+#envelope-cover {
+    cursor: pointer;
+    padding: 50px;
+    transition: transform 0.3s ease;
+}
+
+#envelope-cover:hover {
+    transform: scale(1.1); /* Efek membesar saat di-hover */
+}
+
+.envelope-icon-wrapper {
+    font-size: 6rem; /* Ukuran amplop besar */
+    color: var(--deep-pink);
+    margin-bottom: 15px;
+    filter: drop-shadow(0 5px 15px rgba(231, 84, 128, 0.3));
+    animation: heartBeat 2s infinite; /* Amplop berdenyut */
+}
+
+.click-hint {
+    font-family: 'Quicksand', sans-serif;
+    font-size: 1.1rem;
+    color: var(--text-color);
+    font-weight: bold;
+    opacity: 0.8;
+}
+
+/* Animasi Denyut Amplop */
+@keyframes heartBeat {
+    0% { transform: scale(1); }
+    14% { transform: scale(1.1); }
+    28% { transform: scale(1); }
+    42% { transform: scale(1.1); }
+    70% { transform: scale(1); }
+}
+
+/* --- ANIMASI BUKA SURAT --- */
+.fade-out {
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    pointer-events: none;
+}
+
+@keyframes openLetterAnim {
+    0% { opacity: 0; transform: translateY(50px) scale(0.9); }
+    100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.show-letter-content {
+    display: block !important;
+    animation: openLetterAnim 1.5s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}

@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For You 🎀</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Quicksand:wght@400;500;600&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div id="space-overlay">
+        
+        <div class="warp-container"></div> 
+        <div class="space-content">
+            <div id="start-trigger-box">
+                <p class="instruction">Pasang headset dulu ya...</p>
+                <button class="btn-space-start" onclick="beginJourney()">
+                    Mulai Perjalanan <i class="fa-solid fa-wand-magic-sparkles"></i>
+                </button>
+            </div>
+
+            <div id="text-sequence-box" style="display: none;">
+                <p class="space-text text-1">Di antara miliaran bintang...</p>
+                <p class="space-text text-2">Ada satu cahaya yang paling terang...</p>
+                <p class="space-text text-3">Dan cahaya itu adalah kamu.</p>
+                
+                <h1 class="space-title text-final">
+                    Happy Valentine's Day <i class="fa-solid fa-heart" style="color: var(--deep-pink);"></i>
+                </h1>
+
+                <button id="final-open-btn" class="btn-space-open hidden" onclick="enterWebsite()">
+                    Buka Suratnya <i class="fa-solid fa-envelope-open-text"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <audio id="bg-music" loop>
+        <source src="https://files.catbox.moe/hmh1jr.mp3" type="audio/mpeg">
+    </audio>
+
+    <button class="music-btn fade-in" onclick="toggleMusic()" style="display: none;">
+        <span id="music-icon"><i class="fa-solid fa-music"></i></span>
+    </button>
+
+    <div id="heart-container"></div>
+
+    <header>
+        <div class="logo">To my Beloved <i class="fa-solid fa-heart" style="color: var(--deep-pink);"></i></div>
+        <nav>
+            <ul>
+                <li><a href="#home">Home</a></li>
+                <li><a href="#letter">Surat</a></li>
+                <li><a href="#gallery">Galeri</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section id="home" class="hero-section">
+        <div class="bow-wrapper fade-in">
+            <div class="ribbon">
+                <div class="ribbon-tail-left"></div>
+                <div class="ribbon-tail-right"></div>
+                <div class="ribbon-loop-left"></div>
+                <div class="ribbon-loop-right"></div>
+                <div class="ribbon-knot"></div>
+            </div>
+        </div>
+
+        <div class="hero-content fade-in">
+            <h1 class="floating-text">Happy Valentine's Day</h1>
+            <p class="subtitle">Ada pesan spesial untukmu...</p>
+            <h2 class="partner-name">Sayangku</h2>
+            <div class="scroll-indicator"><i class="fa-solid fa-chevron-down"></i></div>
+        </div>
+    </section>
+
+    <section id="letter" class="section-container">
+        
+        <div id="envelope-cover" class="fade-in" onclick="openLetter()">
+            <div class="envelope-icon-wrapper">
+                <i class="fa-solid fa-envelope"></i>
+            </div>
+            <p class="click-hint">Klik suratnya yah sayang...</p>
+        </div>
+
+        <div id="main-letter" class="letter-box" style="display: none;">
+            <h2 class="section-title">Pesan Untukmu <i class="fa-solid fa-envelope-open-text"></i></h2>
+            <p>
+                Hai kamu! <br><br>
+                Terima kasih sudah menemani hari-hariku. Website ini aku buat spesial hanya untuk kamu, biar kamu tahu betapa berartinya kamu buat aku.
+                <br><br>
+                Aku sayang kamu, sekarang dan selamanya. Jangan bosan sama aku ya!
+            </p>
+            <br>
+            <p class="sign-off">Love You!</p>
+        </div>
+    </section>
+
+    <section id="gallery" class="section-container">
+        <h2 class="section-title">Our Sweet Memories <i class="fa-solid fa-camera-retro"></i></h2>
+        <div class="gallery-grid">
+            <div class="gallery-item fade-in" onclick="openModal(this)" 
+                 data-title="Kencan Pertama" 
+                 data-story="Ini waktu kita pertama kali jalan. Aku inget banget kamu pake baju pink yang lucu itu.">
+                <img src="https://source.unsplash.com/random/300x300/?couple,date" alt="Foto 1">
+            </div>
+            <div class="gallery-item fade-in" onclick="openModal(this)" 
+                 data-title="Dinner Anniversary" 
+                 data-story="Makan malam di tempat favorit kamu. Makanannya enak, tapi ngeliat senyum kamu jauh lebih manis.">
+                <img src="https://source.unsplash.com/random/300x300/?dinner,candle" alt="Foto 2">
+            </div>
+            <div class="gallery-item fade-in" onclick="openModal(this)" 
+                 data-title="Jalan-jalan Sore" 
+                 data-story="Sore itu langitnya bagus banget, persis kayak suasana hati aku pas sama kamu.">
+                <img src="https://source.unsplash.com/random/300x300/?sunset,park" alt="Foto 3">
+            </div>
+            <div class="gallery-item fade-in" onclick="openModal(this)" 
+                 data-title="Hadiah Kecil" 
+                 data-story="Semoga kamu suka ya sama hadiahnya. Nggak seberapa, tapi aku kasih sepenuh hati.">
+                <img src="https://source.unsplash.com/random/300x300/?gift,love" alt="Foto 4">
+            </div>
+        </div>
+    </section>
+
+    <div id="imageModal" class="modal">
+        <span class="close-btn" onclick="closeModal()"><i class="fa-solid fa-xmark"></i></span>
+        <div class="modal-content">
+            <img id="modal-img" src="" alt="">
+            <div class="modal-text">
+                <h3 id="modal-title">Judul Momen</h3>
+                <p id="modal-story">Cerita di sini...</p>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>Made with <i class="fa-solid fa-heart" style="color:white;"></i> by <b>Bibey</b> | 2026</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
