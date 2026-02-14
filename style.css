@@ -321,3 +321,359 @@ footer { background: var(--deep-pink); color: white; text-align: center; padding
     display: block !important;
     animation: openLetterAnim 1.5s cubic-bezier(0.22, 1, 0.36, 1) forwards;
 }
+
+/* --- TIME TOGETHER SECTION --- */
+#timer-section {
+    background-color: white;
+    margin: 20px auto;
+    border-radius: 20px;
+    box-shadow: var(--shadow);
+    padding: 40px 20px;
+    width: 90%;
+    max-width: 800px;
+}
+
+.timer-box {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    flex-wrap: wrap;
+    margin-top: 20px;
+}
+
+.time-item {
+    background: var(--soft-white);
+    padding: 15px;
+    border-radius: 15px;
+    border: 2px solid var(--primary-pink);
+    min-width: 80px;
+    text-align: center;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+    transition: transform 0.3s;
+}
+
+.time-item:hover {
+    transform: translateY(-5px);
+    background: var(--primary-pink);
+    color: white;
+}
+
+.time-item span {
+    font-family: 'Dancing Script', cursive;
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: var(--deep-pink);
+    display: block;
+}
+
+.time-item:hover span {
+    color: white;
+}
+
+.time-item p {
+    font-size: 0.9rem;
+    margin-top: 5px;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: var(--text-color);
+}
+
+.time-item:hover p {
+    color: white;
+}
+
+.timer-note {
+    margin-top: 20px;
+    font-size: 1rem;
+    color: var(--text-color);
+    font-style: italic;
+}
+
+/* --- MARQUEE (RUNNING TEXT PITA) --- */
+.marquee-container {
+    overflow: hidden; /* Sembunyikan teks yang lewat batas */
+    margin: 50px 0; /* Jarak atas bawah */
+    position: relative;
+    width: 100%;
+}
+
+.marquee-tape {
+    background: var(--deep-pink);
+    color: white;
+    padding: 15px 0;
+    white-space: nowrap; /* Teks satu baris tidak turun */
+    
+    /* Efek Miring Aesthetic */
+    transform: rotate(-2deg) scale(1.05); 
+    box-shadow: 0 5px 15px rgba(231, 84, 128, 0.4);
+    border-top: 2px dashed white;
+    border-bottom: 2px dashed white;
+}
+
+.marquee-content {
+    display: inline-block;
+    animation: scrollLeft 20s linear infinite; /* Animasi jalan 20 detik */
+}
+
+.marquee-content span {
+    font-family: 'Quicksand', sans-serif;
+    font-weight: bold;
+    font-size: 1.1rem;
+    margin-right: 40px; /* Jarak antar kalimat */
+    display: inline-flex;
+    align-items: center;
+    gap: 10px; /* Jarak teks ke icon */
+}
+
+/* Animasi Jalan ke Kiri */
+@keyframes scrollLeft {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); } /* Geser setengah panjang konten */
+}
+
+/* Responsif HP: Font agak kecil biar muat banyak */
+@media (max-width: 600px) {
+    .marquee-content span { font-size: 0.9rem; margin-right: 20px; }
+}
+
+/* --- BUCKET LIST STYLES --- */
+.bucket-box {
+    background: white;
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: var(--shadow);
+    text-align: left; /* Biar list-nya rapi di kiri */
+    max-width: 600px;
+    margin: 0 auto;
+    border: 2px solid var(--primary-pink);
+}
+
+.bucket-item {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 15px 0;
+    border-bottom: 1px dashed #eee;
+    font-size: 1.1rem;
+    color: var(--text-color);
+    transition: transform 0.2s;
+}
+
+.bucket-item:last-child {
+    border-bottom: none;
+}
+
+.bucket-item:hover {
+    transform: translateX(10px); /* Geser dikit pas di-hover */
+}
+
+.bucket-item i {
+    font-size: 1.3rem;
+    color: var(--deep-pink);
+}
+
+/* Style untuk yang SUDAH tercapai */
+.bucket-item.checked span {
+    text-decoration: line-through;
+    opacity: 0.6;
+    color: #888;
+}
+
+.bucket-item.checked i {
+    color: #2ecc71; /* Warna hijau centang */
+}
+
+/* --- REPLY BOX TO WHATSAPP --- */
+.reply-box {
+    background: white;
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: var(--shadow);
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+textarea {
+    width: 100%;
+    height: 120px;
+    padding: 15px;
+    border: 2px solid var(--primary-pink);
+    border-radius: 10px;
+    font-family: 'Quicksand', sans-serif;
+    font-size: 1rem;
+    resize: none; /* Gabisa ditarik-tarik */
+    margin-bottom: 20px;
+    outline: none;
+    transition: border-color 0.3s;
+}
+
+textarea:focus {
+    border-color: var(--deep-pink);
+}
+
+.btn-send {
+    background: #ff009d; /* Warna WA */
+    color: white;
+    border: none;
+    padding: 12px 30px;
+    border-radius: 50px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: transform 0.3s, box-shadow 0.3s;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.btn-send:hover {
+    transform: scale(1.05);
+    box-shadow: 0 5px 15px rgba(37, 211, 102, 0.4);
+}
+
+/* --- QUIZ STYLES --- */
+.quiz-box {
+    background: white;
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: var(--shadow);
+    max-width: 500px;
+    margin: 0 auto;
+    border: 2px solid var(--primary-pink);
+}
+
+.question {
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: var(--text-color);
+}
+
+.answers {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.btn-ans {
+    padding: 12px;
+    border: 2px solid var(--primary-pink);
+    background: white;
+    border-radius: 10px;
+    font-family: 'Quicksand', sans-serif;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.btn-ans:hover {
+    background: var(--soft-white);
+    transform: scale(1.02);
+}
+
+/* Animasi Getar kalau Salah */
+@keyframes shake {
+    0% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    50% { transform: translateX(5px); }
+    75% { transform: translateX(-5px); }
+    100% { transform: translateX(0); }
+}
+
+.shake {
+    animation: shake 0.3s;
+    background: #ffcccc !important; /* Merah muda warning */
+    border-color: red !important;
+}
+
+.quiz-item.hidden, .quiz-reward.hidden {
+    display: none;
+}
+
+.quiz-reward i {
+    font-size: 3rem;
+    color: rgb(255, 0, 119);
+    margin-bottom: 10px;
+    animation: bounce 2s infinite;
+}
+
+/* --- CUSTOM ALERT POPUP STYLE --- */
+.custom-alert-overlay {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.5); /* Background gelap transparan */
+    backdrop-filter: blur(5px); /* Efek blur di belakang */
+    z-index: 10001; /* Pastikan di atas segalanya */
+    display: none; /* Sembunyikan default */
+    justify-content: center;
+    align-items: center;
+}
+
+.custom-alert-box {
+    background: white;
+    padding: 30px;
+    border-radius: 20px;
+    border: 3px solid var(--deep-pink); /* Border Pink */
+    box-shadow: 0 10px 25px rgba(231, 84, 128, 0.4);
+    text-align: center;
+    max-width: 350px;
+    width: 85%;
+    transform: scale(0); /* Mulai dari kecil */
+    transition: transform 0.3s;
+}
+
+/* Animasi Muncul Membal (Bouncy) */
+.custom-alert-overlay.active .custom-alert-box {
+    animation: popIn 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
+}
+
+@keyframes popIn {
+    0% { transform: scale(0); opacity: 0; }
+    80% { transform: scale(1.1); opacity: 1; }
+    100% { transform: scale(1); }
+}
+
+.custom-alert-box i {
+    font-size: 3rem;
+    color: var(--deep-pink);
+    margin-bottom: 15px;
+    animation: pulse 2s infinite;
+}
+
+.custom-alert-box h3 {
+    font-family: 'Dancing Script', cursive;
+    font-size: 2rem;
+    color: var(--deep-pink);
+    margin-bottom: 10px;
+}
+
+.custom-alert-box p {
+    font-family: 'Quicksand', sans-serif;
+    color: var(--text-color);
+    margin-bottom: 20px;
+    font-size: 1rem;
+}
+
+.custom-alert-box button {
+    background: var(--deep-pink);
+    color: white;
+    border: none;
+    padding: 10px 30px;
+    border-radius: 50px;
+    font-family: 'Quicksand', sans-serif;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 5px 15px rgba(231, 84, 128, 0.3);
+    transition: transform 0.2s;
+}
+
+.custom-alert-box button:hover {
+    transform: scale(1.05);
+    background: var(--ribbon-dark);
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+}

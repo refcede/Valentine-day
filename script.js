@@ -185,3 +185,115 @@ function openLetter() {
         
     }, 500); 
 }
+
+// ==========================================
+// 6. TIME TOGETHER COUNTER
+// ==========================================
+function startTimer() {
+    // --- GANTI TANGGAL JADIAN DI SINI (Format: YYYY-MM-DD) ---
+    const startDate = new Date("2025-07-19"); // Contoh: 14 Feb 2023
+    // ---------------------------------------------------------
+
+    const daysElem = document.getElementById("days");
+    const hoursElem = document.getElementById("hours");
+    const minutesElem = document.getElementById("minutes");
+    const secondsElem = document.getElementById("seconds");
+
+    function updateTimer() {
+        const now = new Date();
+        const diff = now - startDate;
+
+        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+        const minutes = Math.floor((diff / 1000 / 60) % 60);
+        const seconds = Math.floor((diff / 1000) % 60);
+
+        daysElem.innerText = days;
+        hoursElem.innerText = hours;
+        minutesElem.innerText = minutes;
+        secondsElem.innerText = seconds;
+    }
+
+    setInterval(updateTimer, 1000); // Update setiap 1 detik
+    updateTimer(); // Jalankan langsung saat load
+}
+
+// Panggil fungsi ini
+startTimer();
+
+// ==========================================
+// 7. KIRIM PESAN KE WHATSAPP & CUSTOM ALERT
+// ==========================================
+
+// Fungsi untuk Memunculkan Alert Custom
+function showCustomAlert(message) {
+    const alertOverlay = document.getElementById('custom-alert');
+    const alertMsg = document.getElementById('alert-message');
+    
+    alertMsg.innerText = message;
+    alertOverlay.style.display = 'flex';
+    
+    // Sedikit delay biar animasi CSS jalan mulus
+    setTimeout(() => {
+        alertOverlay.classList.add('active');
+    }, 10);
+}
+
+// Fungsi untuk Menutup Alert
+function closeCustomAlert() {
+    const alertOverlay = document.getElementById('custom-alert');
+    alertOverlay.classList.remove('active');
+    
+    setTimeout(() => {
+        alertOverlay.style.display = 'none';
+    }, 300); // Tunggu animasi selesai baru hilang
+}
+
+function sendToWA() {
+    const inputPesan = document.getElementById('msg-input').value;
+    
+    if (inputPesan.trim() === "") {
+        // GANTI ALERT BAWAAN DENGAN CUSTOM ALERT
+        showCustomAlert("Tulis pesannya dulu dong sayang :(");
+        return;
+    }
+
+    // --- NOMOR WA (Pastikan sudah diganti dengan nomor kamu) ---
+    const nomorHP = "6281234567890"; 
+    // -----------------------------------------------------------
+
+    const url = `https://wa.me/${nomorHP}?text=${encodeURIComponent(inputPesan)}`;
+    window.open(url, '_blank');
+}
+
+// ==========================================
+// 8. INTERACTIVE QUIZ
+// ==========================================
+function wrongAnswer(button) {
+    // Tambahkan efek getar
+    button.classList.add('shake');
+    
+    // Ganti teks sebentar
+    const originalText = button.innerText;
+    button.innerText = "Salah wlee 😝";
+    
+    setTimeout(() => {
+        button.classList.remove('shake');
+        button.innerText = originalText;
+    }, 1000);
+}
+
+function rightAnswer(currentQuestion) {
+    // Sembunyikan pertanyaan sekarang
+    document.getElementById(`q${currentQuestion}`).classList.add('hidden');
+    
+    // Cek apakah ada pertanyaan berikutnya
+    const nextQ = document.getElementById(`q${currentQuestion + 1}`);
+    if (nextQ) {
+        nextQ.classList.remove('hidden');
+    } else {
+        // Kalau sudah habis, munculkan reward
+        document.getElementById('reward').classList.remove('hidden');
+        createHearts(); // Hujan hati
+    }
+}

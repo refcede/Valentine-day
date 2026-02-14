@@ -80,6 +80,31 @@
         </div>
     </section>
 
+<section id="timer-section" class="section-container">
+        <h2 class="section-title">Kita Sudah Bersama Selama... <i class="fa-solid fa-hourglass-half"></i></h2>
+        
+        <div class="timer-box fade-in">
+            <div class="time-item">
+                <span id="days">0</span>
+                <p>Hari</p>
+            </div>
+            <div class="time-item">
+                <span id="hours">0</span>
+                <p>Jam</p>
+            </div>
+            <div class="time-item">
+                <span id="minutes">0</span>
+                <p>Menit</p>
+            </div>
+            <div class="time-item">
+                <span id="seconds">0</span>
+                <p>Detik</p>
+            </div>
+        </div>
+        
+        <p class="timer-note"> 19 Juli 2025, dan akan terus bertambah selamanya ❤️</p>
+    </section>
+
     <section id="letter" class="section-container">
         
         <div id="envelope-cover" class="fade-in" onclick="openLetter()">
@@ -111,6 +136,66 @@
         </div>
     </section>
 
+<div class="marquee-container fade-in">
+        <div class="marquee-tape">
+            <div class="marquee-content">
+                <span>Senyum kamu manis banget <i class="fa-solid fa-heart"></i></span>
+                <span>Kamu selalu sabar ngadepin ibey yang nyebelin <i class="fa-solid fa-heart"></i></span>
+                <span>Ketawa kamu nular <i class="fa-solid fa-heart"></i></span>
+                <span>Kamu rumah ternyaman aku <i class="fa-solid fa-heart"></i></span>
+                <span>suka kalo kamu lagi cerita <i class="fa-solid fa-heart"></i></span>
+                <span>Your eyes are beautiful <i class="fa-solid fa-heart"></i></span>
+                
+                <span>Senyum kamu manis banget <i class="fa-solid fa-heart"></i></span>
+                <span>Kamu selalu sabar ngadepin ibey yang nyebelin <i class="fa-solid fa-heart"></i></span>
+                <span>Ketawa kamu nular <i class="fa-solid fa-heart"></i></span>
+                <span>Kamu rumah ternyaman aku <i class="fa-solid fa-heart"></i></span>
+                <span>suka kalo kamu lagi cerita <i class="fa-solid fa-heart"></i></span>
+                <span>Your eyes are beautiful <i class="fa-solid fa-heart"></i></span>
+            </div>
+        </div>
+    </div>
+
+<section id="quiz" class="section-container">
+        <h2 class="section-title">Seberapa Kenal Aku? <i class="fa-solid fa-puzzle-piece"></i></h2>
+        
+        <div class="quiz-box fade-in">
+            <div class="quiz-item" id="q1">
+                <p class="question">Apa makanan kesukaan ibey yang paling sering aku makan?</p>
+                <div class="answers">
+                    <button class="btn-ans correct" onclick="rightAnswer(1)">Nasi Goreng</button>
+                    <button class="btn-ans wrong" onclick="wrongAnswer(this)">Seblak Level 5</button>
+                    <button class="btn-ans wrong" onclick="wrongAnswer(this)">Kodok goreng</button>
+                </div>
+            </div>
+
+            <div class="quiz-item hidden" id="q2">
+                <p class="question">First date kita dimana? kalo salah ckp tawuuu sich</p>
+                <div class="answers">
+                    <button class="btn-ans wrong" onclick="wrongAnswer(this)">Perpustakaan Kampus</button>
+                    <button class="btn-ans correct" onclick="rightAnswer(2)">Dinner Mie Gacoan</button>
+                    <button class="btn-ans wrong" onclick="wrongAnswer(this)">joging pagi pagi di provinsi</button>
+                </div>
+            </div>
+
+            <div class="quiz-item hidden" id="q3">
+                <p class="question">warna favorite ibey?</p>
+                <div class="answers">
+                    <button class="btn-ans wrong" onclick="wrongAnswer(this)">Pink</button>
+                    <button class="btn-ans correct" onclick="rightAnswer(3)">Biru langit</button>
+                    <button class="btn-ans wrong" onclick="wrongAnswer(this)">Hitam</button>
+                    <button class="btn-ans wrong" onclick="wrongAnswer(this)">biru laut</button>
+                </div>
+            </div>
+
+            <div class="quiz-reward hidden" id="reward">
+                <i class="fa-solid fa-heart"></i>
+                <h3>Yey! Kamu Berhasil!</h3>
+                <p>Hadiahnya adalah cium jauh dari aku! Muah! 💋</p>
+            </div>
+        </div>
+    </section>
+
     <section id="gallery" class="section-container">
         <h2 class="section-title">Our Sweet Memories <i class="fa-solid fa-camera-retro"></i></h2>
         <div class="gallery-grid">
@@ -137,6 +222,42 @@
         </div>
     </section>
 
+    <section id="bucket-list" class="section-container">
+        <h2 class="section-title">Mimpi Kita Bersama <i class="fa-solid fa-list-check"></i></h2>
+        
+        <div class="bucket-box fade-in">
+            <div class="bucket-item checked">
+                <i class="fa-solid fa-square-check"></i>
+                <span>Nonton bioskop bareng</span>
+            </div>
+            
+            <div class="bucket-item checked">
+                <i class="fa-solid fa-square-check"></i>
+                <span>Makan di tempat favorit kamu</span>
+            </div>
+
+            <div class="bucket-item">
+                <i class="fa-regular fa-square"></i>
+                <span>Liburan ke luar kota sudah, tapi luar negeri nya belomm</span>
+            </div>
+
+            <div class="bucket-item checked">
+                <i class="fa-solid fa-square-check"></i>
+                <span>ajak kamu date ke curug, eksplor alam </span>
+            </div>
+
+            <div class="bucket-item">
+                <i class="fa-regular fa-square"></i>
+                <span> punya tabungan bersama, dibuka saat sudah siap </span>
+            </div>
+
+            <div class="bucket-item">
+                <i class="fa-regular fa-square"></i>
+                <span>Sukses bareng & Menua bersama ❤️</span>
+            </div>
+        </div>
+    </section>
+
     <div id="imageModal" class="modal">
         <span class="close-btn" onclick="closeModal()"><i class="fa-solid fa-xmark"></i></span>
         <div class="modal-content">
@@ -147,11 +268,30 @@
             </div>
         </div>
     </div>
+    
+<section id="reply" class="section-container">
+        <h2 class="section-title">Ada pesan buat ibeyy sayang? <i class="fa-brands fa-whatsapp"></i></h2>
+        
+        <div class="reply-box fade-in">
+            <textarea id="msg-input" placeholder="Tulis pesan balasan kamu di sini, sayang..."></textarea>
+            <button class="btn-send" onclick="sendToWA()">
+                Kirim via WhatsApp <i class="fa-solid fa-paper-plane"></i>
+            </button>
+        </div>
+    </section>
 
     <footer>
         <p>Made with <i class="fa-solid fa-heart" style="color:white;"></i> by <b>Bibey</b> | 2026</p>
     </footer>
 
     <script src="script.js"></script>
+    <div id="custom-alert" class="custom-alert-overlay">
+        <div class="custom-alert-box">
+            <i class="fa-solid fa-circle-exclamation"></i>
+            <h3 id="alert-title">Ups!</h3>
+            <p id="alert-message">Pesan peringatan di sini...</p>
+            <button onclick="closeCustomAlert()">Oke Sayang</button>
+        </div>
+    </div>
 </body>
 </html>
